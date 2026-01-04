@@ -6,9 +6,17 @@ engine = create_engine(DB_URL, connect_args={"check_same_thread": False})
 
 
 def create_db_and_tables():
+    """
+    Creates the database and all tables defined in SQLModel metadata.
+    """
     SQLModel.metadata.create_all(engine)
 
 
 def get_session():
+    """
+    Provides a database session generator.
+
+    :yield: A SQLModel Session object.
+    """
     with Session(engine) as session:
         yield session

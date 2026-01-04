@@ -12,6 +12,11 @@ from app.services.chat_service import ChatService
 
 @lru_cache()
 def get_ai_client() -> AIClient:
+    """
+    Provides a singleton instance of the AI client (GeminiClient).
+
+    :return: An instance of AIClient.
+    """
     return GeminiClient(api_key=GOOGLE_API_KEY)
 
 
@@ -19,4 +24,11 @@ def get_chat_service(
     session: Session = Depends(get_session),
     ai_client: AIClient = Depends(get_ai_client),
 ) -> ChatService:
+    """
+    Dependency provider for ChatService.
+
+    :param session: The database session.
+    :param ai_client: The AI client instance.
+    :return: An instance of ChatService.
+    """
     return ChatService(ai_client=ai_client, session=session)
